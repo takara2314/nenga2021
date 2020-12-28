@@ -1,5 +1,4 @@
 // 要素を関連付ける
-let usernameElement = document.getElementById('username');
 let userpassElement = document.getElementById('userpass');
 let loginMessageElement = document.getElementById('loginMessage');
 let authButtonElement = document.getElementById('authButton');
@@ -7,15 +6,14 @@ let authButtonElement = document.getElementById('authButton');
 // 認証ボタンが押されたら
 authButtonElement.addEventListener('click', () => {
     // 名前かパスワードのどちらかが入力されていなかったら
-    if (usernameElement.value === "" || userpassElement.value === "") {
-        loginMessageElement.innerHTML = "両方とも入力してください。";
+    if (userpassElement.value === "") {
+        loginMessageElement.innerHTML = "上のフォームにパスワードを入力してください。";
         // イベントキャンセル
         preventDefault();
     }
 
     // ユーザー情報を格納する連想配列
     let userInfo = {
-        'userName': usernameElement.value,
         'userPassword': userpassElement.value,
         'userAgent': navigator.userAgent
     };
@@ -27,9 +25,9 @@ authButtonElement.addEventListener('click', () => {
         if (xhr.status === 200) {
             loginMessageElement.innerHTML = "認証に成功しました。少々お待ちください。"
         } else if (xhr.status === 401) {
-            loginMessageElement.innerHTML = "名前またはパスワードが間違っています。"
+            loginMessageElement.innerHTML = "パスワードが間違っています。"
         } else {
-            loginMessageElement.innerHTML = "サーバーのエラーです。時間をおいてお試しください。"
+            loginMessageElement.innerHTML = "認証サーバーで問題が発生しました。時間をおいてお試しください。"
         }
     });
 

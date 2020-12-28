@@ -72,7 +72,7 @@ h2 {
 }
 
 section#explain {
-    margin-bottom: 1.3em;
+    margin-bottom: 1em;
     text-align: center;
 }
 
@@ -94,14 +94,8 @@ section#form {
     margin-bottom: 1em;
 }
 
-section#nameForm {
-    margin-bottom: 1.7em;
-    padding-top: 0.6em;
-    border-top: solid 0.25em white;
-}
-
 section#passForm {
-    padding-top: 0.6em;
+    padding-top: 2.5em;
     border-top: solid 0.25em white;
 }
 
@@ -111,10 +105,11 @@ section#passForm {
 
 section#formButton {
     text-align: center;
-    padding-top: 0.6em;
+    padding-top: 1.5em;
 }
 
 input[type="text"], input[type="password"] {
+    -webkit-appearance: none;
     font-size: 1em;
     font-family: Inter, Meiryo, sans-serif;
     margin-top: 0.6em;

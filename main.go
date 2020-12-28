@@ -15,7 +15,6 @@ import (
 
 // ブラウザからXHRされたものを格納
 type postedUserInfo struct {
-	Name     string `json:"userName"`
 	Password string `json:"userPassword"`
 	Agent    string `json:"userAgent"`
 }
@@ -26,15 +25,13 @@ type userActivity struct {
 	IP       string
 	Device   string
 	Browser  string
-	Name     string
+	ID       int
 }
 
-var users []string
 var passwords []string
 
 func main() {
 	// 環境変数から、ハッシュ化されたユーザー名とパスワードを取得
-	users = strings.Split(os.Getenv("USERS_HASHED"), ",")
 	passwords = strings.Split(os.Getenv("PASSWORDS_HASHED"), ",")
 
 	router := gin.Default()
@@ -69,7 +66,7 @@ func authPOST(c *gin.Context) {
 	_ = c.MustBindWith(&postedJSON, binding.JSON)
 
 	// JSONの4つのバリューのどれか一つでも空白なら、Bad Request
-	if postedJSON.Name == "" || postedJSON.Password == "" || postedJSON.Agent == "" {
+	if postedJSON.Password == "" || postedJSON.Agent == "" {
 		c.String(http.StatusBadRequest, "400 Bad Request")
 		return
 	}
@@ -79,26 +76,22 @@ func authPOST(c *gin.Context) {
 		IP:       c.ClientIP(),
 		Device:   getDevice(postedJSON.Agent),
 		Browser:  getBrowser(postedJSON.Agent),
-		Name:     "Unknown",
+		ID:       -1,
 	}
 
-	// JSONの中に含まれる名前とパスワードを、ハッシュ化(SHA-256)して格納
-	nameHashedBytes := sha256.Sum256([]byte(postedJSON.Name))
-	var nameHashed string = hex.EncodeToString(nameHashedBytes[:])
-
+	// JSONの中に含まれるパスワードを、ハッシュ化(SHA-256)して格納
 	passHashedBytes := sha256.Sum256([]byte(postedJSON.Password))
 	var passHashed string = hex.EncodeToString(passHashedBytes[:])
 
-	// ユーザー名が存在し、そのユーザー名に関連付けられたパスワードと一致するなら
-	index := findIndexSliceStr(users, nameHashed)
-	if index != -1 && passwords[index] == passHashed {
+	// パスワードが一致するなら
+	if passIndex := findIndexSliceStr(passwords, passHashed); passIndex != -1 {
 		c.String(http.StatusOK, "OK")
-		// 本人確認できたら、ユーザー情報にそのユーザーであることを代入
-		userInfo.Name = postedJSON.Name
+		// 本人確認できたら、ユーザー情報にそのユーザーのID(インデックス)を代入
+		userInfo.ID = passIndex
 
 		fmt.Printf(
-			"以下のユーザーのログインを許可しました。\n名前: %s\n時刻: %s\nIPアドレス: %s\nデバイス: %s\nブラウザ: %s\nユーザーエージェント: %s\n",
-			userInfo.Name,
+			"あるユーザーのログインを許可しました。\nID: %d\n時刻: %s\nIPアドレス: %s\nデバイス: %s\nブラウザ: %s\nユーザーエージェント: %s\n",
+			userInfo.ID,
 			userInfo.DateTime.Format("2006年1月2日 15時4分5秒"),
 			userInfo.IP,
 			userInfo.Device,
