@@ -6,6 +6,14 @@ let authButtonElement = document.getElementById('authButton');
 
 // 認証ボタンが押されたら
 authButtonElement.addEventListener('click', () => {
+    if (usernameElement.value !== "" || userpassElement.value !== "") {
+        loginMessageElement.innerHTML = "両方とも入力してください。";
+        // イベント伝搬の停止
+        stopPropagation();
+        // イベントキャンセル
+        preventDefault();
+    }
+
     // ユーザー情報を格納する連想配列
     let userInfo = {
         'userName': usernameElement.value,
