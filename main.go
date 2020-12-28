@@ -3,6 +3,7 @@ package main
 import (
 	"crypto/sha256"
 	"encoding/hex"
+	"fmt"
 	"net/http"
 	"os"
 	"strings"
@@ -16,7 +17,6 @@ import (
 type postedUserInfo struct {
 	Name     string `json:"userName"`
 	Password string `json:"userPassword"`
-	OS       string `json:"userOS"`
 	Agent    string `json:"userAgent"`
 }
 
@@ -24,7 +24,7 @@ type postedUserInfo struct {
 type userActivity struct {
 	DateTime time.Time
 	IP       string
-	OS       string
+	Device   string
 	Browser  string
 	Name     string
 }
@@ -69,7 +69,7 @@ func authPOST(c *gin.Context) {
 	_ = c.MustBindWith(&postedJSON, binding.JSON)
 
 	// JSONの4つのバリューのどれか一つでも空白なら、Bad Request
-	if postedJSON.Name == "" || postedJSON.Password == "" || postedJSON.OS == "" || postedJSON.Agent == "" {
+	if postedJSON.Name == "" || postedJSON.Password == "" || postedJSON.Agent == "" {
 		c.String(http.StatusBadRequest, "400 Bad Request")
 		return
 	}
@@ -77,8 +77,8 @@ func authPOST(c *gin.Context) {
 	userInfo := userActivity{
 		DateTime: time.Now(),
 		IP:       c.ClientIP(),
-		OS:       "Windows",
-		Browser:  "Chrome",
+		Device:   getDevice(postedJSON.Agent),
+		Browser:  getBrowser(postedJSON.Agent),
 		Name:     "Unknown",
 	}
 
@@ -95,9 +95,11 @@ func authPOST(c *gin.Context) {
 		c.String(http.StatusOK, "OK")
 		// 本人確認できたら、ユーザー情報にそのユーザーであることを代入
 		userInfo.Name = postedJSON.Name
+		fmt.Println(userInfo)
 		return
 	}
 	c.String(http.StatusUnauthorized, "401 Unauthorized")
+	fmt.Println(userInfo.Name)
 }
 
 // 404
