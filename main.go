@@ -75,7 +75,7 @@ func authPOST(c *gin.Context) {
 	}
 
 	userInfo := userActivity{
-		DateTime: time.Now(),
+		DateTime: timeDiffConv(time.Now()),
 		IP:       c.ClientIP(),
 		Device:   getDevice(postedJSON.Agent),
 		Browser:  getBrowser(postedJSON.Agent),
@@ -124,6 +124,18 @@ func authPOST(c *gin.Context) {
 // 404
 func noRoute(c *gin.Context) {
 	c.String(http.StatusNotFound, "見つかりませんでした。")
+}
+
+// 時差変換をして返す関数
+func timeDiffConv(tTime time.Time) (rTime time.Time) {
+	// よりUTCらしくする
+	rTime = tTime.UTC()
+
+	// UTC → JST
+	var jst *time.Location = time.FixedZone("Asia/Tokyo", 9*60*60)
+	rTime = rTime.In(jst)
+
+	return
 }
 
 // 対象の文字列型スライスから特定の文字列のインデックスを返す
