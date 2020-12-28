@@ -9,8 +9,6 @@ authButtonElement.addEventListener('click', () => {
     // 名前かパスワードのどちらかが入力されていなかったら
     if (usernameElement.value === "" || userpassElement.value === "") {
         loginMessageElement.innerHTML = "両方とも入力してください。";
-        // イベント伝搬の停止
-        stopPropagation();
         // イベントキャンセル
         preventDefault();
     }
@@ -27,7 +25,7 @@ authButtonElement.addEventListener('click', () => {
 
     xhr.addEventListener('loadend', () => {
         if (xhr.status === 200) {
-            loginMessageElement.innerHTML = "認証に成功しました。ようこそ。"
+            loginMessageElement.innerHTML = "認証に成功しました。少々お待ちください。"
         } else if (xhr.status === 401) {
             loginMessageElement.innerHTML = "名前またはパスワードが間違っています。"
         } else {
