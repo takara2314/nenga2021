@@ -4,7 +4,7 @@ import "strings"
 
 // ユーザーエージェントからブラウザ名を取得
 func getBrowser(agent string) string {
-	if strings.Contains(agent, "AppleWebKit") {
+	if strings.Contains(agent, "Macintosh") || strings.Contains(agent, "iPhone") || strings.Contains(agent, "iPad") || strings.Contains(agent, "iPod") {
 		if strings.Contains(agent, "CriOS") {
 			return "Chrome"
 		} else if strings.Contains(agent, "FxiOS") {

@@ -97,12 +97,13 @@ func authPOST(c *gin.Context) {
 		userInfo.Name = postedJSON.Name
 
 		fmt.Printf(
-			"以下のユーザーのログインを許可しました。\n名前: %s\n時刻: %s\nIPアドレス: %s\nデバイス: %s\nブラウザ: %s\n",
+			"以下のユーザーのログインを許可しました。\n名前: %s\n時刻: %s\nIPアドレス: %s\nデバイス: %s\nブラウザ: %s\nユーザーエージェント: %s\n",
 			userInfo.Name,
 			userInfo.DateTime.Format("2006年1月2日 15時4分5秒"),
 			userInfo.IP,
 			userInfo.Device,
 			userInfo.Browser,
+			postedJSON.Agent,
 		)
 
 		return
@@ -111,11 +112,12 @@ func authPOST(c *gin.Context) {
 	c.String(http.StatusUnauthorized, "401 Unauthorized")
 
 	fmt.Printf(
-		"ログインを試みたユーザーがいましたが、ブロックしました。\n時刻: %s\nIPアドレス: %s\nデバイス: %s\nブラウザ: %s\n",
+		"ログインを試みたユーザーがいましたが、ブロックしました。\n時刻: %s\nIPアドレス: %s\nデバイス: %s\nブラウザ: %s\nユーザーエージェント: %s\n",
 		userInfo.DateTime.Format("2006年1月2日 15時4分5秒"),
 		userInfo.IP,
 		userInfo.Device,
 		userInfo.Browser,
+		postedJSON.Agent,
 	)
 }
 
