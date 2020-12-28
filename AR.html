@@ -7,6 +7,34 @@
   </head>
 
   <body>
+    <main>
+      <h1>本人確認</h1>
+      以下の情報を入力してください。これは認証のみ使用されます。
+
+      <section>
+        <section>
+          <p>
+            <h2>下のお名前</h2>
+            <span class="memo">あなたのフルネームが「年賀　太郎」なら、「太郎」と入力してください。</span>
+          </p>
+          <input id="username" type="text">
+        </section>
+        <section>
+          <p>
+            <h2>年賀状に記載されているパスワード</h2>
+            <span class="memo">裏面の中央下側にある、半角英数と記号含めた、9文字程度のパスワードです。</span>
+          </p>
+          <input id="userpass" type="password">
+        </section>
+        <section>
+          <input id="authButton" type="button" value="認証する">
+        </section>
+      </section>
+
+      本人確認ができない場合は、直接たからーんまでお問い合わせください。
+    </main>
+
+    <script type="text/javascript" src="./resources/js/AR.js"></script>
     <!-- A-Frame, AR.js の読み込み -->
     <script src="./resources/js/aframe.min.js"></script>
     <script src="./resources/js/aframe-ar.js"></script>
