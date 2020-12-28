@@ -6,7 +6,8 @@ let authButtonElement = document.getElementById('authButton');
 
 // 認証ボタンが押されたら
 authButtonElement.addEventListener('click', () => {
-    if (usernameElement.value !== "" || userpassElement.value !== "") {
+    // 名前かパスワードのどちらかが入力されていなかったら
+    if (usernameElement.value === "" || userpassElement.value === "") {
         loginMessageElement.innerHTML = "両方とも入力してください。";
         // イベント伝搬の停止
         stopPropagation();
@@ -35,7 +36,7 @@ authButtonElement.addEventListener('click', () => {
     });
 
     // 認証サーバーにJSONで認証情報をPOSTする
-    xhr.open('POST', 'http://localhost:2021/auth');
+    xhr.open('POST', 'https://nenga2021.2314.tk/auth');
     xhr.setRequestHeader('content-type', 'application/json');
     // ユーザー情報を認証サーバーに転送
     xhr.send(
