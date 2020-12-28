@@ -95,11 +95,28 @@ func authPOST(c *gin.Context) {
 		c.String(http.StatusOK, "OK")
 		// 本人確認できたら、ユーザー情報にそのユーザーであることを代入
 		userInfo.Name = postedJSON.Name
-		fmt.Println(userInfo)
+
+		fmt.Printf(
+			"以下のユーザーのログインを許可しました。\n名前: %s\n時刻: %s\nIPアドレス: %s\nデバイス: %s\nブラウザ: %s\n",
+			userInfo.Name,
+			userInfo.DateTime.Format("2006年1月2日 15時4分5秒"),
+			userInfo.IP,
+			userInfo.Device,
+			userInfo.Browser,
+		)
+
 		return
 	}
+
 	c.String(http.StatusUnauthorized, "401 Unauthorized")
-	fmt.Println(userInfo.Name)
+
+	fmt.Printf(
+		"ログインを試みたユーザーがいましたが、ブロックしました。\n時刻: %s\nIPアドレス: %s\nデバイス: %s\nブラウザ: %s\n",
+		userInfo.DateTime.Format("2006年1月2日 15時4分5秒"),
+		userInfo.IP,
+		userInfo.Device,
+		userInfo.Browser,
+	)
 }
 
 // 404
