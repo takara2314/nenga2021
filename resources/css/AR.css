@@ -1,0 +1,9 @@
+body {
+    margin: 0;
+    overflow: hidden;
+}
+
+.memo {
+    color: gray;
+    font-size: 0.75em;
+}

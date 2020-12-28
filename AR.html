@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+      <meta charset="UTF-8">
+      <title>たからーん年賀状AR</title>
+      <link rel="stylesheet" href="./resources/css/AR.css">
+  </head>
+
+  <body>
+    <main>
+      <h1>本人確認</h1>
+      以下の情報を入力してください。これは認証のみ使用されます。
+
+      <section>
+        <section>
+          <p>
+            <h2>下のお名前</h2>
+            <span class="memo">あなたのフルネームが「年賀　太郎」なら、「太郎」と入力してください。</span>
+          </p>
+          <input id="username" type="text">
+        </section>
+        <section>
+          <p>
+            <h2>年賀状に記載されているパスワード</h2>
+            <span class="memo">裏面の中央下側にある、半角英数と記号含めた、9文字程度のパスワードです。</span>
+          </p>
+          <input id="userpass" type="password">
+        </section>
+        <section>
+          <input id="authButton" type="button" value="認証する">
+        </section>
+      </section>
+
+      本人確認ができない場合は、直接たからーんまでお問い合わせください。
+    </main>
+
+    <script type="text/javascript" src="./resources/js/AR.js"></script>
+    <!-- A-Frame, AR.js の読み込み -->
+    <script src="./resources/js/aframe.min.js"></script>
+    <script src="./resources/js/aframe-ar.js"></script>
+
+    <!-- A-Frame のVR空間にAR.jsを紐づける (デバッグUIを非表示) -->
+    <a-scene embedded arjs="debugUIEnabled:false">
+      <!-- モデル(OBJ)読み込み -->
+      <a-assets>
+        <a-asset-item id="obj" src="./resources/models/loadTest.obj"></a-asset-item>
+        <a-asset-item id="mtl" src="./resources/models/loadTest.mtl"></a-asset-item>
+      </a-assets>
+
+      <!-- マーカー -->
+      <a-marker preset="custom" type="pattern" url="./resources/patterns/pattern-nenga2021-qr.patt">
+        <!-- マーカーの場所にモデルを置く -->
+        <a-obj-model
+          src="#obj"
+          mtl="#mtl"
+          scale="0.1 0.1 0.1"
+          position="0 0 0">
+          <a-animation
+            attribute="rotation"
+            to="0 360 0"
+            dur="3000"
+            easing="linear"
+            repeat="indefinite">
+          </a-animation>
+        </a-obj-model>
+      </a-marker>
+
+      <!-- AR用のカメラ -->
+      <a-entity camera></a-entity>
+    </a-scene>
+  </body>
+</html>
