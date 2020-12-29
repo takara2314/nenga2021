@@ -6,8 +6,8 @@ let authButtonElement = document.getElementById('authButton');
 // 認証ボタンが押されたら
 authButtonElement.addEventListener('click', () => {
     // 名前かパスワードのどちらかが入力されていなかったら
-    if (userpassElement.value === "") {
-        loginMessageElement.innerHTML = "上のフォームにパスワードを入力してください。";
+    if (userpassElement.value === '') {
+        loginMessageElement.innerHTML = '上のフォームにパスワードを入力してください。';
         // イベントキャンセル
         preventDefault();
     }
@@ -23,19 +23,29 @@ authButtonElement.addEventListener('click', () => {
 
     xhr.addEventListener('loadend', () => {
         if (xhr.status === 200) {
-            loginMessageElement.innerHTML = "認証に成功しました。少々お待ちください。"
+            loginMessageElement.innerHTML = '認証に成功しました。少々お待ちください。';
+            htmlChange(xhr.response);
         } else if (xhr.status === 401) {
-            loginMessageElement.innerHTML = "パスワードが間違っています。"
+            loginMessageElement.innerHTML = 'パスワードが間違っています。';
         } else {
-            loginMessageElement.innerHTML = "認証サーバーで問題が発生しました。時間をおいてお試しください。"
+            loginMessageElement.innerHTML = '認証サーバーで問題が発生しました。時間をおいてお試しください。';
         }
     });
 
     // 認証サーバーにJSONで認証情報をPOSTする
-    xhr.open('POST', 'https://nenga2021.2314.tk/auth');
+    xhr.open('POST', 'http://localhost:2021/auth');
     xhr.setRequestHeader('content-type', 'application/json');
     // ユーザー情報を認証サーバーに転送
     xhr.send(
         JSON.stringify(userInfo)
     );
 })
+
+const htmlChange = (html) => {
+    let mainElement = document.getElementById('mainView');
+    mainElement.innerHTML = html;
+
+    mainElement.style.border = '0';
+    mainElement.style.padding = '0';
+    mainElement.style.height = '0';
+}

@@ -16,7 +16,6 @@ import (
 // ブラウザからXHRされたものを格納
 type postedUserInfo struct {
 	Password string `json:"userPassword"`
-	Agent    string `json:"userAgent"`
 }
 
 // データベースに格納するデータを格納
@@ -56,7 +55,7 @@ func rootGET(c *gin.Context) {
 
 // [GET] /ar
 func arGET(c *gin.Context) {
-	c.HTML(200, "AR.html", nil)
+	c.HTML(http.StatusOK, "AR.html", nil)
 }
 
 // [POST] /auth
@@ -65,8 +64,8 @@ func authPOST(c *gin.Context) {
 	var postedJSON postedUserInfo
 	_ = c.MustBindWith(&postedJSON, binding.JSON)
 
-	// JSONの4つのバリューのどれか一つでも空白なら、Bad Request
-	if postedJSON.Password == "" || postedJSON.Agent == "" {
+	// JSONにuserPasswordが含まれてなかったら、Bad Request
+	if postedJSON.Password == "" {
 		c.String(http.StatusBadRequest, "400 Bad Request")
 		return
 	}
@@ -74,8 +73,8 @@ func authPOST(c *gin.Context) {
 	userInfo := userActivity{
 		DateTime: timeDiffConv(time.Now()),
 		IP:       c.ClientIP(),
-		Device:   getDevice(postedJSON.Agent),
-		Browser:  getBrowser(postedJSON.Agent),
+		Device:   getDevice(c.Request.Header.Get("user-agent")),
+		Browser:  getBrowser(c.Request.Header.Get("user-agent")),
 		ID:       -1,
 	}
 
@@ -85,7 +84,9 @@ func authPOST(c *gin.Context) {
 
 	// パスワードが一致するなら
 	if passIndex := findIndexSliceStr(passwords, passHashed); passIndex != -1 {
-		c.String(http.StatusOK, "OK")
+		// c.String(http.StatusOK, fmt.Sprintf("OK %d", passIndex))
+		// c.String(http.StatusOK, "<div id=\"takaran\">タカラーンです！</div>")
+		c.HTML(http.StatusOK, "core.html", nil)
 		// 本人確認できたら、ユーザー情報にそのユーザーのID(インデックス)を代入
 		userInfo.ID = passIndex
 
@@ -96,7 +97,7 @@ func authPOST(c *gin.Context) {
 			userInfo.IP,
 			userInfo.Device,
 			userInfo.Browser,
-			postedJSON.Agent,
+			c.Request.Header.Get("user-agent"),
 		)
 
 		return
@@ -110,7 +111,7 @@ func authPOST(c *gin.Context) {
 		userInfo.IP,
 		userInfo.Device,
 		userInfo.Browser,
-		postedJSON.Agent,
+		c.Request.Header.Get("user-agent"),
 	)
 }
 
