@@ -45,23 +45,21 @@ authButtonElement.addEventListener('click', () => {
 
 const htmlChange = () => {
     let mainElement = document.getElementsByTagName('main')[0];
-    mainElement.innerHTML = '<p id="authed">本人確認できました。</p><h1>ARの世界へようこそ</h1><p class="cameraMemo">ARによる演出のため、カメラの使用を許可してください。</p><p class="cameraMemo">カメラの映像がサーバーに転送されることはないので、ご安心ください。</p>';
-
-    navigator.getMedia = ( navigator.getUserMedia ||
-        navigator.webkitGetUserMedia ||
-        navigator.mozGetUserMedia ||
-        navigator.msGetUserMedia);
+    mainElement.innerHTML = '<p id="authed">本人確認できました。</p><h1>カメラを許可してください</h1><p class="cameraMemo">ARによる演出のため、カメラの使用を許可してください。</p><p class="cameraMemo">カメラの映像がサーバーに転送されることはないので、ご安心ください。</p>';
 
     // バックカメラが利用可能かを見る
     // (利用可能かを見た後に、自動的に次にフロントカメラを使用する設定にしてくれる)
-    navigator.getMedia({video: {facingMode: "environment"}}, () => {
-        mainElement.remove();
+    navigator.mediaDevices.getUserMedia({video: {facingMode: "environment"}}).then(
+        () => {
+            mainElement.remove();
 
-        let coreScriptElement = document.createElement('script');
-        coreScriptElement.src = './resources/js/ARcore.js';
-        coreScriptElement.type = 'text/javascript';
-        document.body.appendChild(coreScriptElement);
-    }, () => {
-        mainElement.innerHTML = '<p id="authed">本人確認できました。</p><h1 id="cameraBlocked">カメラをブロックしないでください</h1><p class="cameraMemo">ARによる演出のために、カメラの映像を使用する必要があります。</p><p class="cameraMemo">演出を見る場合は、カメラを許可してください。</p><p class="cameraMemo">カメラの映像がサーバーに転送されることはないので、ご安心ください。</p>';
-    });
+            let coreScriptElement = document.createElement('script');
+            coreScriptElement.src = './resources/js/ARcore.js';
+            coreScriptElement.type = 'text/javascript';
+            document.body.appendChild(coreScriptElement);
+        },
+        () => {
+            mainElement.innerHTML = '<p id="authed">本人確認できました。</p><h1 id="cameraBlocked">カメラをブロックしないでください</h1><p class="cameraMemo">ARによる演出のために、カメラの映像を使用する必要があります。</p><p class="cameraMemo">演出を見る場合は、カメラを許可してください。</p><p class="cameraMemo">カメラの映像がサーバーに転送されることはないので、ご安心ください。</p>';
+        }
+    );
 }
