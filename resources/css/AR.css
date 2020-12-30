@@ -26,7 +26,6 @@
         height: 83vh;
     }
 }
-
 /* タブレット */
 @media only screen and (min-width: 767px) and (max-width: 1280px) {
     body {
@@ -43,7 +42,6 @@
         height: 83vh;
     }
 }
-
 /* スマホ */
 @media screen and (max-width: 767px) {
     body {
@@ -126,7 +124,6 @@ input[type="text"], input[type="password"] {
         width: 84vw;
     }
 }
-
 /* タブレット */
 @media only screen and (min-width: 767px) and (max-width: 1280px) {
     input[type="text"], input[type="password"] {
@@ -158,4 +155,17 @@ input[type="button"]:hover {
     width: 100vw;
     display: table-cell;
     vertical-align: bottom;
+}
+
+p#authed {
+    margin-bottom: 0.5em;
+    color: green;
+}
+
+p.cameraMemo {
+    margin-bottom: 1em;
+}
+
+h1#cameraBlocked {
+    color: red;
 }
