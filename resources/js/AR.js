@@ -35,7 +35,7 @@ authButtonElement.addEventListener('click', () => {
     });
 
     // 認証サーバーにJSONで認証情報をPOSTする
-    xhr.open('POST', 'http://localhost:2021/auth');
+    xhr.open('POST', 'https://nenga2021.2314.tk/auth');
     xhr.setRequestHeader('content-type', 'application/json');
     // ユーザー情報を認証サーバーに転送
     xhr.send(
