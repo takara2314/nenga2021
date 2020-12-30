@@ -5,12 +5,14 @@
       <title>たからーん年賀状AR</title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
       <link rel="stylesheet" href="./resources/css/AR.css">
-      <script src="./resources/js/aframe.min.js"></script>
-      <script src="./resources/js/aframe-ar.js"></script>
+      <script src="./resources/js/three.min.js" type="text/javascript"></script>
+      <script src="./resources/js/GLTFLoader.js" type="text/javascript"></script>
+      <script src="./resources/js/ar.min.js" type="text/javascript"></script>
+      <script src="./resources/js/tweenjs.min.js" type="text/javascript"></script>
   </head>
 
   <body>
-    <main id="mainView">
+    <main>
       <section id="explain">
         <h1>本人確認</h1>
         <div>以下の情報を入力してください。これは認証のみ使用されます。</div>
@@ -19,7 +21,7 @@
         <section id="passForm">
           <p>
             <h2>年賀状に記載されているパスワード</h2>
-            <span class="memo">裏面の中央下側にある、半角英数と記号含めた、9文字程度のパスワードです。</span>
+            <span class="memo">文面の中央下側にある、半角英数と記号を含めた、9文字程度のパスワードです。</span>
           </p>
           <input id="userpass" type="password">
         </section>
@@ -32,6 +34,6 @@
         </section>
       </section>
     </main>
-    <script type="text/javascript" src="./resources/js/AR.js"></script>
+    <script src="./resources/js/AR.js" type="text/javascript"></script>
   </body>
 </html>
