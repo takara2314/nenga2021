@@ -1,4 +1,4 @@
-console.log('hey');
+let personName = "Unknown";
 
 // 要素を関連付ける
 let userpassElement = document.getElementById('userpass');
@@ -25,7 +25,8 @@ authButtonElement.addEventListener('click', () => {
     xhr.addEventListener('loadend', () => {
         if (xhr.status === 200) {
             loginMessageElement.innerHTML = '認証に成功しました。少々お待ちください。';
-            htmlChange(xhr.response);
+            personName = xhr.response;
+            htmlChange();
         } else if (xhr.status === 401) {
             loginMessageElement.innerHTML = 'パスワードが間違っています。';
         } else {
@@ -34,7 +35,7 @@ authButtonElement.addEventListener('click', () => {
     });
 
     // 認証サーバーにJSONで認証情報をPOSTする
-    xhr.open('POST', 'https://nenga2021.2314.tk/auth');
+    xhr.open('POST', 'http://localhost:2021/auth');
     xhr.setRequestHeader('content-type', 'application/json');
     // ユーザー情報を認証サーバーに転送
     xhr.send(
@@ -42,33 +43,12 @@ authButtonElement.addEventListener('click', () => {
     );
 })
 
-const htmlChange = (html) => {
+const htmlChange = () => {
     let mainElement = document.getElementsByTagName('main')[0];
-    let bodyElement = mainElement.parentElement;
     mainElement.remove();
-
-    // let threeScriptElement = document.createElement('script');
-    // threeScriptElement.src = './resources/js/three.min.js';
-    // threeScriptElement.type = 'text/javascript';
-    // bodyElement.appendChild(threeScriptElement);
-
-    // let threeGLTFScriptElement = document.createElement('script');
-    // threeGLTFScriptElement.src = './resources/js/GLTFLoader.js';
-    // threeGLTFScriptElement.type = 'text/javascript';
-    // bodyElement.appendChild(threeGLTFScriptElement);
-
-    // let arScriptElement = document.createElement('script');
-    // arScriptElement.src = './resources/js/ar.min.js';
-    // arScriptElement.type = 'text/javascript';
-    // bodyElement.appendChild(arScriptElement);
-
-    // let tweenScriptElement = document.createElement('script');
-    // tweenScriptElement.src = './resources/js/tweenjs.min.js';
-    // tweenScriptElement.type = 'text/javascript';
-    // bodyElement.appendChild(tweenScriptElement);
 
     let coreScriptElement = document.createElement('script');
     coreScriptElement.src = './resources/js/ARcore.js';
     coreScriptElement.type = 'text/javascript';
-    bodyElement.appendChild(coreScriptElement);
+    document.body.appendChild(coreScriptElement);
 }

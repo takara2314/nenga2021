@@ -28,10 +28,13 @@ type userActivity struct {
 }
 
 var passwords []string
+var personNames []string
 
 func main() {
-	// 環境変数から、ハッシュ化されたユーザー名とパスワードを取得
+	// 環境変数から、ハッシュ化されたパスワードを取得
 	passwords = strings.Split(os.Getenv("PASSWORDS_HASHED"), ",")
+	// 環境変数から、送り先の人の名前(ニックネーム)を取得
+	personNames = strings.Split(os.Getenv("PERSON_NAMES"), ",")
 
 	router := gin.Default()
 
@@ -84,14 +87,14 @@ func authPOST(c *gin.Context) {
 
 	// パスワードが一致するなら
 	if passIndex := findIndexSliceStr(passwords, passHashed); passIndex != -1 {
-		// c.String(http.StatusOK, fmt.Sprintf("OK %d", passIndex))
-		// c.String(http.StatusOK, "<div id=\"takaran\">タカラーンです！</div>")
-		c.HTML(http.StatusOK, "core.html", nil)
+		// 名前(ニックネーム)を返す
+		c.String(http.StatusOK, personNames[passIndex])
 		// 本人確認できたら、ユーザー情報にそのユーザーのID(インデックス)を代入
 		userInfo.ID = passIndex
 
 		fmt.Printf(
-			"あるユーザーのログインを許可しました。\nID: %d\n時刻: %s\nIPアドレス: %s\nデバイス: %s\nブラウザ: %s\nユーザーエージェント: %s\n",
+			"%sがログインしました。\nID: %d\n時刻: %s\nIPアドレス: %s\nデバイス: %s\nブラウザ: %s\nユーザーエージェント: %s\n",
+			personNames[passIndex],
 			userInfo.ID,
 			userInfo.DateTime.Format("2006年1月2日 15時4分5秒"),
 			userInfo.IP,
