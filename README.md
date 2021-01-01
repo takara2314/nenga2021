@@ -29,4 +29,7 @@ patternRatio: 0.85
 
 ## ✏ 補足
 丑の3Dモデル以外は、Blenderを用いて自分でモデリングしました。
+
+丑のモデル:　https://creazilla.com/ja/nodes/3177-3d-model
+
 ![https://i.gyazo.com/c0b5ebfcfdabdfa321276e699accd447.png](https://i.gyazo.com/c0b5ebfcfdabdfa321276e699accd447.png)
