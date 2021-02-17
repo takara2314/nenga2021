@@ -2,15 +2,18 @@
 紙の年賀状の文面に印刷されているQRコードを読み取ると、ARによる演出を楽しめるWebページです。
 紙の年賀状じゃ物足りない…！今年の年賀状は意外な物にしたい！という思いから製作しました。
 
-[https://nenga2021.2314.tk/ar](https://nenga2021.2314.tk/ar)
+https://nenga2021.2314.tk/ar
 
 (iOS/iPadOSの方はSafariからアクセスしてください)
 
-## 📮 ARマーカー付きの年賀状 (文面)
+## 🎞 動作映像
+https://twitter.com/takara2314/status/1344963015372808194
+
+## 📮 ARマーカー付きの年賀状（文面）
 この年賀状をPCで映すか、印刷し、スマホでQRコードを読み取ってみましょう！
 ![https://github.com/takara2314/nenga2021/blob/master/Nenga_2021_Sample.png](https://github.com/takara2314/nenga2021/blob/master/Nenga_2021_Sample.png)
 
-## 📚 使用ライブラリ
+## 📚 使用ライブラリ（フレームワーク）
 |               | ライブラリ名     |
 | ------------- | --------------- |
 | フロントエンド | AR.js, Three.js |
